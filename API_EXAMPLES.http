@@ -1,0 +1,80 @@
+### Get Placeholders from Template
+GET http://localhost:8080/api/pptx/placeholders?templatePath=templates/report-template.pptx
+Accept: application/json
+
+###
+
+### Generate Presentation with Text Replacement
+POST http://localhost:8080/api/pptx/generate
+Content-Type: application/json
+
+{
+  "templateName": "templates/report-template.pptx",
+  "placeholders": [
+    {
+      "key": "companyName",
+      "type": "TEXT",
+      "value": "Acme Corporation"
+    },
+    {
+      "key": "reportTitle",
+      "type": "TEXT",
+      "value": "Q4 2024 Financial Report"
+    },
+    {
+      "key": "date",
+      "type": "TEXT",
+      "value": "December 31, 2024"
+    },
+    {
+      "key": "revenue",
+      "type": "TEXT",
+      "value": "$1,250,000"
+    }
+  ]
+}
+
+###
+
+### Generate Presentation with Text and Image
+POST http://localhost:8080/api/pptx/generate
+Content-Type: application/json
+
+{
+  "templateName": "templates/report-template.pptx",
+  "placeholders": [
+    {
+      "key": "title",
+      "type": "TEXT",
+      "value": "Annual Report 2024"
+    },
+    {
+      "key": "logo",
+      "type": "IMAGE",
+      "value": {
+        "imageBytes": "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==",
+        "contentType": "image/png",
+        "pictureType": 6
+      }
+    }
+  ]
+}
+
+###
+
+### Modify Presentation (Returns Bytes)
+POST http://localhost:8080/api/pptx/modify
+Content-Type: application/json
+
+{
+  "templateName": "templates/simple-template.pptx",
+  "placeholders": [
+    {
+      "key": "greeting",
+      "type": "TEXT",
+      "value": "Hello World"
+    }
+  ]
+}
+
+###
