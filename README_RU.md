@@ -23,12 +23,36 @@
 ### 3. Подготовка шаблона
 
 1. Создайте PPTX файл в PowerPoint
-2. Вставьте плейсхолдеры в формате `{{имя_переменной}}`
+2. Вставьте плейсхолдеры:
+   - **Полная замена текста**: `{{имя_переменной}}`
+   - **Вставка значения**: `$имя_переменной`
+   - **Изображение**: текстовое поле с `{{logo}}`
 3. Сохраните файл в `src/main/resources/templates/`
 
-Пример:
-- Текст: `Компания: {{companyName}}`
-- Изображение: Создайте текстовое поле с `{{logo}}`
+**Примеры плейсхолдеров:**
+- Полная замена: `{{заголовок}}` → заменится на значение
+- Вставка: `Цена: $цена руб.` → `Цена: 1000 руб.`
+- Изображение: `{{logo}}` → заменится на картинку
+
+## Типы плейсхолдеров
+
+### TEXT - Полная замена
+```
+Шаблон: {{заголовок}}
+Результат: Финансовый отчет Q4 2024
+```
+
+### INSERT - Вставка значения
+```
+Шаблон: Цена: $цена руб.
+Результат: Цена: 1000 руб.
+```
+
+### IMAGE - Замена на изображение
+```
+Шаблон: {{logo}} (в текстовом поле)
+Результат: [изображение]
+```
 
 ## API Endpoints
 
@@ -67,7 +91,7 @@ curl -X POST http://localhost:8080/api/pptx/generate \
 
 1. **Модели** (`model/`)
    - `Placeholder` - плейсхолдер с ключом, типом и значением
-   - `PlaceholderType` - тип: TEXT или IMAGE
+   - `PlaceholderType` - тип: TEXT, INSERT или IMAGE
    - `TemplateData` - данные шаблона
    - `ImageData` - данные изображения
 
@@ -77,7 +101,8 @@ curl -X POST http://localhost:8080/api/pptx/generate \
    - `PptxDownloadService` - подготовка к скачиванию
 
 3. **Replacers** (`service/replacer/`)
-   - `TextPlaceholderReplacer` - замена текста
+   - `TextPlaceholderReplacer` - полная замена текста
+   - `InsertPlaceholderReplacer` - вставка значений
    - `ImagePlaceholderReplacer` - замена изображений
 
 ### Расширение функциональности
@@ -161,5 +186,8 @@ src/main/resources/
 ## Полезные ссылки
 
 - Детальная документация: [PPTX_USAGE.md](PPTX_USAGE.md)
+- **Использование INSERT плейсхолдеров**: [INSERT_USAGE.md](INSERT_USAGE.md)
+- **Базовый сервис для всех отчетов**: [BASE_SERVICE_USAGE.md](BASE_SERVICE_USAGE.md)
+- **Специализированные сервисы**: [SPECIALIZED_SERVICES.md](SPECIALIZED_SERVICES.md)
 - Примеры API запросов: [API_EXAMPLES.http](API_EXAMPLES.http)
 - Архитектура проекта: [CLAUDE.md](CLAUDE.md)

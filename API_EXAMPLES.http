@@ -78,3 +78,67 @@ Content-Type: application/json
 }
 
 ###
+
+### Generate with INSERT (Partial Replacement)
+# Template: "Цена: $цена руб." → "Цена: 1000 руб."
+POST http://localhost:8080/api/pptx/generate
+Content-Type: application/json
+
+{
+  "templateName": "templates/invoice-template.pptx",
+  "placeholders": [
+    {
+      "key": "цена",
+      "type": "INSERT",
+      "value": "1000"
+    },
+    {
+      "key": "количество",
+      "type": "INSERT",
+      "value": "5"
+    },
+    {
+      "key": "дата",
+      "type": "INSERT",
+      "value": "03.12.2024"
+    }
+  ]
+}
+
+###
+
+### Combined: TEXT (full replace) + INSERT (partial replace)
+POST http://localhost:8080/api/pptx/generate
+Content-Type: application/json
+
+{
+  "templateName": "templates/report-template.pptx",
+  "placeholders": [
+    {
+      "key": "заголовок",
+      "type": "TEXT",
+      "value": "Финансовый отчет Q4 2024"
+    },
+    {
+      "key": "дата",
+      "type": "INSERT",
+      "value": "31.12.2024"
+    },
+    {
+      "key": "выручка",
+      "type": "INSERT",
+      "value": "1,250,000 руб."
+    },
+    {
+      "key": "logo",
+      "type": "IMAGE",
+      "value": {
+        "imageBytes": "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==",
+        "contentType": "image/png",
+        "pictureType": 6
+      }
+    }
+  ]
+}
+
+###

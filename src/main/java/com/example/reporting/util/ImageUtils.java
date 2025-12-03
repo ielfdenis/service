@@ -10,7 +10,7 @@ import java.nio.file.Path;
 public class ImageUtils {
 
     public static ImageData createImageData(byte[] imageBytes, String contentType) {
-        int pictureType = getPictureType(contentType);
+        PictureData.PictureType pictureType = getPictureType(contentType);
         return ImageData.builder()
             .imageBytes(imageBytes)
             .contentType(contentType)
@@ -24,18 +24,18 @@ public class ImageUtils {
         return createImageData(imageBytes, contentType);
     }
 
-    private static int getPictureType(String contentType) {
+    private static PictureData.PictureType getPictureType(String contentType) {
         if (contentType == null) {
-            return PictureData.PictureType.PNG.ooxmlId;
+            return PictureData.PictureType.PNG;
         }
 
         return switch (contentType.toLowerCase()) {
-            case "image/jpeg", "image/jpg" -> PictureData.PictureType.JPEG.ooxmlId;
-            case "image/png" -> PictureData.PictureType.PNG.ooxmlId;
-            case "image/gif" -> PictureData.PictureType.GIF.ooxmlId;
-            case "image/bmp" -> PictureData.PictureType.BMP.ooxmlId;
-            case "image/tiff" -> PictureData.PictureType.TIFF.ooxmlId;
-            default -> PictureData.PictureType.PNG.ooxmlId;
+            case "image/jpeg", "image/jpg" -> PictureData.PictureType.JPEG;
+            case "image/png" -> PictureData.PictureType.PNG;
+            case "image/gif" -> PictureData.PictureType.GIF;
+            case "image/bmp" -> PictureData.PictureType.BMP;
+            case "image/tiff" -> PictureData.PictureType.TIFF;
+            default -> PictureData.PictureType.PNG;
         };
     }
 }
